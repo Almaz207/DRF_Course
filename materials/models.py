@@ -33,10 +33,10 @@ class Lesson(models.Model):
         blank=True,
     )
     description = models.TextField(
-        verbose_name="Описание урока", help_text="Описание урока"
+        verbose_name="Описание урока", help_text="Описание урока", null=True, blank=True
     )
-    link = models.CharField(max_length=200, verbose_name="ссылка")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    link = models.URLField(max_length=200, verbose_name="ссылка", null=True, blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = "Урок"
