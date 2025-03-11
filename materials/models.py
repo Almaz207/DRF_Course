@@ -36,7 +36,13 @@ class Lesson(models.Model):
         verbose_name="Описание урока", help_text="Описание урока", null=True, blank=True
     )
     link = models.URLField(max_length=200, verbose_name="ссылка", null=True, blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="lessons",
+    )
 
     class Meta:
         verbose_name = "Урок"
