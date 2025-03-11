@@ -13,8 +13,8 @@ from materials.serializers import CourseSerializer, LessonSerializer
 
 
 class CourseViewSet(ModelViewSet):
-    queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    queryset = Course.objects.all()
 
 
 class LessonCreateApiView(CreateAPIView):
