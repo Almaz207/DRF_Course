@@ -7,30 +7,11 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 
-from materials.models import Payments
+from users.models import Payments
 
 from users.serializers import PaymentsSerializer
 
-class PaymentsCreateApiView(CreateAPIView):
-    queryset = Payments.objects.all()
-    serializer_class = PaymentsSerializer
 
-
-class PaymentsListApiView(ListAPIView):
-    queryset = Payments.objects.all()
-    serializer_class = PaymentsSerializer
-
-
-class PaymentsRetrieveApiView(RetrieveAPIView):
-    queryset = Payments.objects.all()
-    serializer_class = PaymentsSerializer
-
-
-class PaymentsUpdateApiView(UpdateAPIView):
-    queryset = Payments.objects.all()
-    serializer_class = PaymentsSerializer
-
-
-class PaymentsDestroyApiView(DestroyAPIView):
+class PaymentsViewSet(ModelViewSet):
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
