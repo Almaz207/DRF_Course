@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from materials.models import Course
+from materials.models import Course, Lesson
 
 
 class CustomUser(AbstractUser):
@@ -51,6 +51,15 @@ class Payments(models.Model):
         blank=True,
         null=True,
         verbose_name="Оплаченный курс",
+        related_name='course'
+    )
+    payment_lesson = models.ForeignKey(
+        Lesson,
+        on_delete=models.CASCADE,
+        related_name='lesson',
+        verbose_name="Оплаченный урок",
+        null=True,
+        blank=True
     )
     price = models.PositiveIntegerField(default=0, verbose_name="Стоимость покупки")
     payment_method = models.CharField(
