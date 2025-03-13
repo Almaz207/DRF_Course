@@ -41,7 +41,6 @@ class Payment(models.Model):
     time = models.DateTimeField(
         verbose_name="Дата оплаты",
         help_text="Введите дату",
-
         blank=True,
         null=True,
     )
