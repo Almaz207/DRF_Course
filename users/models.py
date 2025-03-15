@@ -50,7 +50,7 @@ class Payment(models.Model):
         blank=True,
         null=True,
         verbose_name="Оплаченный курс",
-        related_name='payments'
+        related_name="payments",
     )
     lesson = models.ForeignKey(
         Lesson,
@@ -58,7 +58,7 @@ class Payment(models.Model):
         verbose_name="Оплаченный урок",
         null=True,
         blank=True,
-        related_name='payments'
+        related_name="payments",
     )
     price = models.PositiveIntegerField(default=0, verbose_name="Стоимость покупки")
     method = models.CharField(
