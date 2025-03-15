@@ -17,13 +17,14 @@ class Course(models.Model):
     )
 
     owner = models.ForeignKey(
-        'users.CustomUser',
+        "users.CustomUser",
         on_delete=models.CASCADE,
         related_name="course",
         null=True,
         blank=True,
         verbose_name="Владелец",
-        help_text="Укажите автора курса")
+        help_text="Укажите автора курса",
+    )
 
     class Meta:
         verbose_name = "Курс"
@@ -54,13 +55,14 @@ class Lesson(models.Model):
     )
 
     owner = models.ForeignKey(
-        'users.CustomUser',
+        "users.CustomUser",
         on_delete=models.CASCADE,
         related_name="lessons",
         null=True,
         blank=True,
         verbose_name="Владелец",
-        help_text="Укажите автора урока")
+        help_text="Укажите автора урока",
+    )
 
     class Meta:
         verbose_name = "Урок"
