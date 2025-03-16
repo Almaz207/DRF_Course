@@ -80,4 +80,4 @@ class Payment(models.Model):
         verbose_name_plural = "Оплаты"
 
     def __str__(self):
-        return self.payment_method
+        return self.method
