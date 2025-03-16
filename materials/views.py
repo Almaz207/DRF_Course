@@ -20,16 +20,26 @@ class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
 
     def get_permissions(self):
-        if self.action in ["create"]:
-            self.permission_classes = (~IsModer,)
+        if self.action == "create":
+            self.permission_classes = (IsAuthenticated, ~IsModer,)
         elif self.action in ["update", "retrieve"]:
-            self.permission_classes = (IsModer | IsOwner,)
+            self.permission_classes = (IsAuthenticated, IsModer | IsOwner,)
+        elif self.action == "list":
+            self.permission_classes = (IsAuthenticated, IsModer | IsOwner,)
         elif self.action == "destroy":
-            self.permission_classes = (IsOwner | ~IsModer,)
+            self.permission_classes = (IsAuthenticated, IsOwner | ~IsModer,)
         return super().get_permissions()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        user = self.request.user
+        print(user.username, user.groups.filter(name="moders").exists())
+        if user.groups.filter(name="moders").exists():
+            return Course.objects.all()
+        else:
+            return Course.objects.filter(owner=user)
 
 
 class LessonCreateApiView(CreateAPIView):
@@ -42,9 +52,16 @@ class LessonCreateApiView(CreateAPIView):
 
 
 class LessonListApiView(ListAPIView):
-    queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = (IsAuthenticated, IsModer | IsOwner)
+
+    def get_queryset(self):
+        user = self.request.user
+        print(user.username, user.groups.filter(name="moders").exists())
+        if user.groups.filter(name="moders").exists():
+            return Lesson.objects.all()
+        else:
+            return Lesson.objects.filter(owner=user)
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
