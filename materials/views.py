@@ -10,7 +10,6 @@ from rest_framework.generics import (
 
 from materials.models import Course, Lesson
 from materials.serializers import CourseSerializer, LessonSerializer
-from users.models import CustomUser
 
 from users.permissions import IsModer, IsOwner
 
