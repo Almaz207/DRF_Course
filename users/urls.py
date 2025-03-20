@@ -11,9 +11,6 @@ from users.views import (
     PaymentsViewSet,
     PaymentsListAPIView,
     CustomUserCreateAPIView,
-    CustomUserRetrieveAPIView,
-    CustomUserUpdateAPIView,
-    CustomUserDestroyAPIView,
 )
 
 app_name = UsersConfig.name
