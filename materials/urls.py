@@ -8,7 +8,8 @@ from materials.views import (
     LessonListApiView,
     LessonRetrieveApiView,
     LessonUpdateApiView,
-    LessonDestroyApiView, SubscriptionView,
+    LessonDestroyApiView,
+    SubscriptionView,
 )
 
 app_name = MaterialsConfig.name
@@ -21,8 +22,10 @@ urlpatterns = [
     path("lesson/create", LessonCreateApiView.as_view(), name="lesson_create"),
     path("lesson/<int:pk>", LessonRetrieveApiView.as_view(), name="lesson_retrieve"),
     path("lesson/<int:pk>/update", LessonUpdateApiView.as_view(), name="lesson_update"),
-    path("lesson/<int:pk>/delete", LessonDestroyApiView.as_view(), name="lesson_delete"),
-    path('subscribe', SubscriptionView.as_view(), name='subscribe'),
+    path(
+        "lesson/<int:pk>/delete", LessonDestroyApiView.as_view(), name="lesson_delete"
+    ),
+    path("subscribe", SubscriptionView.as_view(), name="subscribe"),
 ]
 
 urlpatterns += router.urls

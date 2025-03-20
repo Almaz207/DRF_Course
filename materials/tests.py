@@ -7,14 +7,16 @@ from users.models import CustomUser
 
 class CourseTestCase(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create(first_name="userus", last_name="test", username="userus_test")
+        self.user = CustomUser.objects.create(
+            first_name="userus", last_name="test", username="userus_test"
+        )
         self.course = Course.objects.create(name="Какой-то курс")
         Lesson.objects.all().delete()
         self.lesson = Lesson.objects.create(
             title="Первый урок",
             course=self.course,
             link="https://youtube.com/sample_video",
-            owner=self.user
+            owner=self.user,
         )
         self.client.force_authenticate(user=self.user)
 
@@ -33,7 +35,7 @@ class CourseTestCase(APITestCase):
     def test_get_lessons(self):
         response = self.client.get("/course/lesson")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(len(response.data["results"]), 1)
 
     def test_update_lesson(self):
         data = {
@@ -42,7 +44,9 @@ class CourseTestCase(APITestCase):
             "link": "https://youtube.com/updated_video",
             "course": self.course.id,
         }
-        response = self.client.put(f"/course/lesson/{self.lesson.id}/update", data, format="json")
+        response = self.client.put(
+            f"/course/lesson/{self.lesson.id}/update", data, format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.lesson.refresh_from_db()
         self.assertEqual(self.lesson.title, "Второй урок")

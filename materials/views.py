@@ -8,7 +8,8 @@ from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
     UpdateAPIView,
-    DestroyAPIView, get_object_or_404,
+    DestroyAPIView,
+    get_object_or_404,
 )
 
 from materials.models import Course, Lesson, Subscription
@@ -103,19 +104,23 @@ class LessonDestroyApiView(DestroyAPIView):
 class SubscriptionView(APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
-        course_id = request.data.get('course_id')
+        course_id = request.data.get("course_id")
 
         if not course_id:
-            return Response({"error": "Course ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Course ID is required"}, status=status.HTTP_400_BAD_REQUEST
+            )
         course = get_object_or_404(Course, id=course_id)
-        subscription, created = Subscription.objects.get_or_create(user=user, course=course)
+        subscription, created = Subscription.objects.get_or_create(
+            user=user, course=course
+        )
 
         if created:
-            message = 'Подписка добавлена'
+            message = "Подписка добавлена"
             status_code = status.HTTP_201_CREATED
         else:
             subscription.delete()
-            message = 'Подписка удалена'
+            message = "Подписка удалена"
             status_code = status.HTTP_204_NO_CONTENT
 
         return Response({"message": message}, status=status_code)
