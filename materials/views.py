@@ -15,7 +15,7 @@ from rest_framework.generics import (
 from materials.models import Course, Lesson, Subscription
 from materials.paginators import CustomPagination
 from materials.serializers import CourseSerializer, LessonSerializer
-
+from materials.tasks import mail_update_course_info
 from users.permissions import IsModer, IsOwner
 
 
@@ -58,6 +58,11 @@ class CourseViewSet(ModelViewSet):
             return Course.objects.filter(owner=user)
 
     pagination_class = CustomPagination
+
+    def perform_update(self, serializer):
+        updated_course = serializer.save()
+        mail_update_course_info.delay(updated_course)
+        updated_course.save()
 
 
 class LessonCreateApiView(CreateAPIView):
