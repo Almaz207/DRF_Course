@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.12
 
 WORKDIR /code
 
@@ -17,10 +17,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копируем исходный код приложения в контейнер
 COPY . .
 
-# Определяем переменные окружения
-ENV SECRET_KEY="SECRET_KEY"
-ENV CELERY_BROKER_URL="CELERY_BROKER_URL"
-ENV CELERY_BACKEND="CELERY_RESULT_BACKEND"
 
 # Создаем директорию для медиафайлов
 RUN mkdir -p /app/media
@@ -28,5 +24,3 @@ RUN mkdir -p /app/media
 # Пробрасываем порт, который будет использовать Django
 EXPOSE 8000
 
-# Команда для запуска приложения
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
