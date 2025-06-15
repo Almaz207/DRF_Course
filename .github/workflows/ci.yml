@@ -27,6 +27,16 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: user ${{ secrets.DJANGO_POSTGRES_USER }}
+          POSTGRES_PASSWORD: password ${{ secrets.DJANGO_POSTGRES_PASSWORD }}
+          POSTGRES_DB: mydatabase ${{ secrets.DJANGO_POSTGRES_DB }}
+        ports:
+          - 5432:5432
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
