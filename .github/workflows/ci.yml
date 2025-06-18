@@ -87,6 +87,13 @@ jobs:
         run: python manage.py test
         env:
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DATABASE_URL: postgres://${{ secrets.DJANGO_POSTGRES_USER }}:${{ secrets.DJANGO_POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.DJANGO_POSTGRES_DB }}
+          ENGINE: django.db.backends.postgresql_psycopg2
+          POSTGRES_DB: ${{ secrets.DJANGO_POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.DJANGO_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DJANGO_POSTGRES_PASSWORD }}
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
 
 
   build:
