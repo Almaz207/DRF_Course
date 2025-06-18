@@ -30,11 +30,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: user ${{ secrets.DJANGO_POSTGRES_USER }}
-          POSTGRES_PASSWORD: password ${{ secrets.DJANGO_POSTGRES_PASSWORD }}
-          POSTGRES_DB: mydatabase ${{ secrets.DJANGO_POSTGRES_DB }}
-          POSTGRES_PORT: 5432
-          POSTGRES_HOST: localhost
+          POSTGRES_USER: ${{ secrets.DJANGO_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DJANGO_POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DJANGO_POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
@@ -62,9 +60,12 @@ jobs:
         run: python manage.py migrate
         env:
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DATABASE_URL: postgres://${{ secrets.DJANGO_POSTGRES_USER }}:${{ secrets.DJANGO_POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.DJANGO_POSTGRES_DB }}
 
       - name: Run tests
         run: python manage.py test
+        env:
+          DATABASE_URL: postgres://${{ secrets.DJANGO_POSTGRES_USER }}:${{ secrets.DJANGO_POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.DJANGO_POSTGRES_DB }}
 
   build:
     needs: test
