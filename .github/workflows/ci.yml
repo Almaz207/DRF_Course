@@ -55,7 +55,7 @@ jobs:
           pip install psycopg2-binary
 
       - name: Wait for PostgreSQL
-        run: sleep 5
+        run: sleep 15
 
       - name: Check PostgreSQL connection
         run: |
