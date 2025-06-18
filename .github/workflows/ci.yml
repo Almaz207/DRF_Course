@@ -59,8 +59,8 @@ jobs:
       - name: Debug secrets availability
         run: |
           echo "Проверка секретов:"
-          echo "DB_USER: ${{ secrets.DB_USER != '' && '****' || 'NOT SET' }}"
-          echo "Длина DB_PASSWORD: ${#SECRETS_DB_PASSWORD}"
+          echo "DJANGO_POSTGRES_USER: ${{ secrets.DJANGO_POSTGRES_USER != '' && '****' || 'NOT SET' }}"
+          echo "Длина DB_PASSWORD: ${#DJANGO_POSTGRES_PASSWORD}"
     
 
       - name: Wait for PostgreSQL
