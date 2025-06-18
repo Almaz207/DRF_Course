@@ -62,7 +62,7 @@ jobs:
           echo "DJANGO_POSTGRES_USER: ${{ secrets.DJANGO_POSTGRES_USER != '' && '****' || 'NOT SET' }}"
           echo "DJANGO_POSTGRES_DB: ${{ secrets.DJANGO_POSTGRES_DB != '' && '****' || 'NOT SET' }}"
           echo "Длина DB_PASSWORD: ${#DJANGO_POSTGRES_PASSWORD}"
-    
+
 
       - name: Wait for PostgreSQL
         run: sleep 15
@@ -106,14 +106,6 @@ jobs:
 
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login docker.io -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Debug Docker Hub creds
-        run: |
-          echo "Username length: ${#DOCKER_HUB_USERNAME}"
-          echo "Token length: ${#DOCKER_HUB_ACCESS_TOKEN}"
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
