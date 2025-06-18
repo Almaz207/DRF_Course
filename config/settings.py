@@ -87,8 +87,8 @@ DATABASES = {
         "NAME": "drf_course",
         "USER": "postgres",
         "PASSWORD": "234567",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "HOST": os.getenv("DATABASE_HOST"),
+        "PORT": os.getenv("DATABASE_PORT"),
     }
 }
 
