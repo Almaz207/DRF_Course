@@ -40,6 +40,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+    
+    
 
     steps:
       - uses: actions/checkout@v3
@@ -54,6 +56,13 @@ jobs:
           pip install -r requirements.txt
           pip install psycopg2-binary
 
+      - name: Debug secrets availability
+        run: |
+          echo "Проверка секретов:"
+          echo "DB_USER: ${{ secrets.DB_USER != '' && '****' || 'NOT SET' }}"
+          echo "Длина DB_PASSWORD: ${#SECRETS_DB_PASSWORD}"
+    
+
       - name: Wait for PostgreSQL
         run: sleep 15
 
@@ -66,12 +75,12 @@ jobs:
         env:
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           DATABASE_URL: postgres://${{ secrets.DJANGO_POSTGRES_USER }}:${{ secrets.DJANGO_POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.DJANGO_POSTGRES_DB }}
-          DJANGO_DB_ENGINE: django.db.backends.postgresql
-          DJANGO_DB_NAME: ${{ secrets.DJANGO_POSTGRES_DB }}
-          DJANGO_DB_USER: ${{ secrets.DJANGO_POSTGRES_USER }}
-          DJANGO_DB_PASSWORD: ${{ secrets.DJANGO_POSTGRES_PASSWORD }}
-          DJANGO_DB_HOST: localhost
-          DJANGO_DB_PORT: 5432
+          ENGINE: django.db.backends.postgresql_psycopg2
+          POSTGRES_DB: ${{ secrets.DJANGO_POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.DJANGO_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DJANGO_POSTGRES_PASSWORD }}
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
 
       - name: Run tests
         run: python manage.py test
